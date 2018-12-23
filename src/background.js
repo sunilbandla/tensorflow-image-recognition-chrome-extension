@@ -5,6 +5,14 @@ import { IMAGENET_CLASSES } from './imagenet_classes';
 const MOBILENET_MODEL_PATH = 'https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json';
 const IMAGE_SIZE = 224;
 const TOPK_PREDICTIONS = 10;
+const MIN_ANIMAL_PROBABILITY = 0.15;
+const ANIMAL_CLASSES = [
+  'cat',
+  'dog',
+  'terrier',
+  'corgi',
+  'chihuahua'
+];
 
 class BackgroundProcessing {
 
@@ -80,6 +88,14 @@ class BackgroundProcessing {
     return topClassesAndProbs;
   }
 
+  doesImageContainAnimal(predictions) {
+    return ANIMAL_CLASSES.some(animal => {
+      return !!(predictions && predictions.some(prediction => {
+        return prediction.className.toLocaleLowerCase().includes(animal)
+          && prediction.probability > MIN_ANIMAL_PROBABILITY;
+      }));
+    });
+  }
 
   async predict(imgElement) {
     console.log('Predicting...');
@@ -94,9 +110,10 @@ class BackgroundProcessing {
 
     // Convert logits to probabilities and class names.
     const predictions = await this.getTopKClasses(logits, TOPK_PREDICTIONS);
+    const isAnimal = this.doesImageContainAnimal(predictions);
     const totalTime = Math.floor(performance.now() - startTime);
     console.log(`Prediction done in ${totalTime}ms:`, predictions);
-    return predictions;
+    return { predictions, isAnimal };
   }
 
   async analyzeImage(src) {
@@ -112,7 +129,9 @@ class BackgroundProcessing {
       if (!meta.predictions) {
         const img = await this.loadImage(src);
         if (img) {
-          meta.predictions = await this.predict(img);
+          const result = await this.predict(img);
+          meta.predictions = result.predictions;
+          meta.isAnimal = result.isAnimal;
         }
       }
 
