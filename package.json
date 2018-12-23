@@ -1,7 +1,7 @@
 {
   "name": "tensorflow-image-recognition-chrome-extension",
   "version": "0.1.0",
-  "description": "Chrome browser extension for using TensorFlow image recognition",
+  "description": "Chrome browser extension for using TensorFlow to replace animal images on web pages with biryani.",
   "keywords": [
     "tensorflow",
     "tf",
@@ -16,6 +16,9 @@
     "image recognition",
     "chrome extension",
     "chrome",
+    "cat",
+    "dog",
+    "biryani",
     "google"
   ],
   "scripts": {

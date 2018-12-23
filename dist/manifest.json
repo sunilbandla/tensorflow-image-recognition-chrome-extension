@@ -1,9 +1,9 @@
 {
-  "name": "TensorFlow Image Recognition Chrome Extension",
-  "version": "0.1",
-  "description": "TensorFlow chrome extension for using pretrained MobileNet NN to analyze images on web pages!",
-  "homepage_url": "https://www.polarspin.com/",
-  "author": "Jouni Kontinen",
+  "name": "Animal to Biryani Chrome Extension",
+  "version": "0.2",
+  "description": "TensorFlow chrome extension for using pretrained MobileNet NN to analyze images on web pages! It replaces animal images on web pages with biryani pictures.",
+  "homepage_url": "https://github.com/sunilbandla",
+  "author": "Sunil Bandla",
   "permissions": [
     "activeTab",
     "declarativeContent",
@@ -26,5 +26,5 @@
     }
   ],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-  "manifest_version": 2
+  "manifest_version": 3
 }
